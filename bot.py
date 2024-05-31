@@ -10,11 +10,17 @@ from aiogram.types import ReplyKeyboardRemove
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 
 class Shogirdchalar(StatesGroup):
     name = State()
     surename = State()
+
+
+class User(StatesGroup):
+    loc = State()
+    phone = State()
 
 
 API_TOKEN = "7183171518:AAF3U7nVBvjqDCOtXcVIjtP2044oW_UwpmM"
@@ -24,13 +30,13 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 logging.basicConfig(level=logging.INFO)
 
 
-# image = [
-#     'game.jpg',
-#     'strike.jpg',
-#     'telegram.jpg'
-# ]
-#
-# son = 0
+image = [
+    'game.jpg',
+    'strike.jpg',
+    'telegram.jpg'
+]
+
+son = 0
 
 
 @dp.message_handler(commands=["start"])
@@ -52,6 +58,56 @@ async def finishh(message: types.Message, state: FSMContext):
     print(message.text)
     await message.answer("Registratsiyadan otdingiz")
     await state.finish()
+
+
+# location = ReplyKeyboardMarkup(
+#     keyboard=[
+#         [
+#             KeyboardButton("Locatsiya jonating", request_location=True),
+#         ]
+#     ],
+#     resize_keyboard=True,
+# )
+# @dp.message_handler(commands=["loc"])
+# async def loc(message: types.Message):
+#     await message.answer("Locatsiyangizni yuboring" , reply_markup=location)
+#     await User.loc.set()
+#
+# @dp.message_handler(content_types='location', state=User.loc)
+# async def loc(message: types.Message, state: FSMContext):
+#     await message.answer("Locatsiyangiz qabul qilindi")
+#     await state.finish()
+#
+# @dp.message_handler(content_types='location')
+# async def loc(message: types.Message, state: FSMContext):
+#     await message.answer(" qabul qilindi")
+#
+
+# phone_number = ReplyKeyboardMarkup(
+#     keyboard=[
+#         [
+#             KeyboardButton("Telefon nomeringizni jonating", request_contact=True),
+#         ]
+#     ],
+#     resize_keyboard=True,
+# )
+#
+#
+# @dp.message_handler(commands='phone')
+# async def phone(message: types.Message):
+#     await message.answer("Telefon nomeringizni jonating", reply_markup=phone_number)
+#     await User.phone.set()
+#
+#
+# @dp.message_handler(content_types='contact', state=User.phone)
+# async def phone(message: types.Message, state: FSMContext):
+#     await message.answer("Telefon nomeringiz qabul qilindi ")
+#     await state.finish()
+#
+#
+# @dp.message_handler(content_types='contact')
+# async def phone(message: types.Message):
+#     await message.answer("nomeringiz qabul qilindi ")
 
 
 # @dp.message_handler(content_types=types.ContentType.CONTACT, state=Shogirdchalar.phone)
